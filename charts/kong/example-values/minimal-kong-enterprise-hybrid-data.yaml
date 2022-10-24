@@ -9,37 +9,38 @@
 # Hybrid mode requires a certificate. See https://github.com/Kong/charts/blob/main/charts/kong/README.md#certificates
 # to create one.
 
+kong:
+  customEnv: null
+  image:
+    repository: kong/kong-gateway
+    tag: "3.0"
 
-image:
-  repository: kong/kong-gateway
-  tag: "3.0"
+  env:
+    role: data_plane
+    cluster_control_plane: CHANGEME-control-service.CHANGEME-namespace.svc.cluster.local:8005
+    lua_ssl_trusted_certificate: /etc/secrets/kong-cluster-cert/tls.crt
+    cluster_cert: /etc/secrets/kong-cluster-cert/tls.crt
+    cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
 
-env:
-  role: data_plane
-  cluster_control_plane: CHANGEME-control-service.CHANGEME-namespace.svc.cluster.local:8005
-  lua_ssl_trusted_certificate: /etc/secrets/kong-cluster-cert/tls.crt
-  cluster_cert: /etc/secrets/kong-cluster-cert/tls.crt
-  cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
+  secretVolumes:
+  - kong-cluster-cert
 
-secretVolumes:
-- kong-cluster-cert
-
-ingressController:
-  enabled: false
-
-enterprise:
-  enabled: true
-  # See instructions regarding enterprise licenses at https://github.com/Kong/charts/blob/master/charts/kong/README.md#kong-enterprise-license
-  license_secret: kong-enterprise-license # CHANGEME
-  vitals:
+  ingressController:
     enabled: false
 
-manager:
-  enabled: false
+  enterprise:
+    enabled: true
+    # See instructions regarding enterprise licenses at https://github.com/Kong/charts/blob/master/charts/kong/README.md#kong-enterprise-license
+    license_secret: kong-enterprise-license # CHANGEME
+    vitals:
+      enabled: false
 
-portal:
-  enabled: false
+  manager:
+    enabled: false
 
-portalapi:
-  enabled: false
+  portal:
+    enabled: false
+
+  portalapi:
+    enabled: false
 
