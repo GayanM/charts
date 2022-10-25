@@ -585,7 +585,7 @@ ingressController:
 # https://github.com/Kong/charts/blob/main/charts/kong/FAQs.md#kong-fails-to-start-after-helm-upgrade-when-postgres-is-used-what-do-i-do
 
 postgresql:
-  enabled: false
+  enabled: true
   auth:
     username: kong
     database: kong
